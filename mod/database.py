@@ -37,9 +37,13 @@ class Textfile:
 
     def __init__(self, filename: str, create: str = 'n', log_file: str = None, type_log: str = 'error'):
         self.name = search(filename, create = create)
-        if create == 'y':
-            if self.name == None:
+        
+        if self.name == None:
+            if create == 'y':
                 self.name = search(filename)
+            else:
+                raise Exception("The file doesn't exist, use the parameter (create = 'y') to create it.")
+            
         self.log = Log(log_file)
         if type_log == 'info':
             self.type_log = 'info'
