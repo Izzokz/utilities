@@ -1,4 +1,6 @@
 import os
+from sys import setrecursionlimit
+setrecursionlimit(999_999_999)
 
 from pathlib import Path
 import sys
@@ -303,10 +305,10 @@ class Textfile:
             return True
         elif value == 'False':
             return False
-        elif isnumber(value):
-            return int(value)
         elif (value[0] == '"' and value[-1] == '"') or (value[0] == f"'" and value[-1] == f"'"):
             return value[1:-1]
+        elif isnumber(value):
+            return int(value)
         elif isfloat(value):
             return float(value)
         return self.fix_value(value)
