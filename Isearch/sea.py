@@ -10,16 +10,18 @@ keys = [
     "Cost+of+"
 ]
 
+timer = False
 device = os.name
 
 def search(text):
     search = "https://www.google.com/search?q="
+    global timer
     
     if device == 'posix':
         if subprocess.run(['ps aux | grep -q [f]irefox && echo "on" || echo "off"'], capture_output = True, shell = True).stdout == b'off\n':
             timer = True
         for key in keys:
-            subprocess.run(["firefox " + search + key + text + " 2>/dev/null"], shell = True)
+            subprocess.run(["firefox " + search + key + text + " 2>/dev/null &"], shell = True)
             if timer:
                 time.sleep(1)
                 timer = False
@@ -33,5 +35,6 @@ def search(text):
                 time.sleep(1)
                 timer = False
 
-query = "+".join(input("What kind of information do you want?").split())
-search(query)
+while True:
+    query = "+".join(input("What kind of information do you want?").split())
+    search(query)
